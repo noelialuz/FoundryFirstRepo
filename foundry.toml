@@ -1,0 +1,52 @@
+# Configuración base compartida por todos los perfiles.
+# Docs: https://www.getfoundry.sh/config
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.28"
+optimizer = true
+optimizer_runs = 200
+
+# Test — Sepolia. Compilación rápida para iteración y despliegues de prueba.
+# Uso: FOUNDRY_PROFILE=test forge script ...
+[profile.test]
+eth_rpc_url = "test"
+chain_id = 11155111
+etherscan_api_key = "sepolia"
+optimizer = false
+fuzz = { runs = 256 }
+
+# Stage — Sepolia con settings de pre-producción (bytecode similar a prod).
+# Uso: FOUNDRY_PROFILE=stage forge script ...
+[profile.stage]
+eth_rpc_url = "stage"
+chain_id = 11155111
+etherscan_api_key = "sepolia"
+optimizer = true
+optimizer_runs = 1000000
+via_ir = true
+
+# Prod — Ethereum Mainnet. Máxima optimización para despliegue final.
+# Uso: FOUNDRY_PROFILE=prod forge script ...
+[profile.prod]
+eth_rpc_url = "prod"
+chain_id = 1
+etherscan_api_key = "mainnet"
+optimizer = true
+optimizer_runs = 1000000
+via_ir = true
+bytecode_hash = "none"
+
+# Endpoints RPC (se integran en el perfil activo).
+# Las variables deben definirse en .env: source .env
+[rpc_endpoints]
+local = "http://127.0.0.1:8545"
+test = "${TEST_RPC_URL}"
+stage = "${STAGE_RPC_URL}"
+prod = "${PROD_RPC_URL}"
+
+# Claves Etherscan por red (una sola API key sirve para todas con Etherscan V2).
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}", chain = 11155111 }
+mainnet = { key = "${ETHERSCAN_API_KEY}", chain = 1 }
