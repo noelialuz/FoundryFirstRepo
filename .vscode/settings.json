@@ -2,5 +2,6 @@
     "wake.compiler.solc.remappings": [
         "forge-std/=lib/forge-std/src/"
     ],
-    "snyk.advanced.autoSelectOrganization": true
+    "snyk.advanced.autoSelectOrganization": true,
+    "solidity.compileUsingRemoteVersion": "v0.8.35+commit.47b9dedd"
 }
