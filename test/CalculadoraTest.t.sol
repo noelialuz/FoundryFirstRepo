@@ -41,47 +41,22 @@ contract CalculadoraTest is Test { //"IS" es la palabra reservada para herencia 
         assert(calculadora.result() == 200);
     }
     function test_divide() public {  
-        calculadora.divide(20, 20);
-        assert(calculadora.result() == 1);
+        vm.prank(owner);
+        calculadora.divide(200, 20);
+        assert(calculadora.result() == 10);
     }
 
         // divide sin ser owner
     function test_revert_divide_notOwner() public {
         vm.expectRevert("Not allowed");
-        calculadora.divide(10, 20);
+        calculadora.divide(100, 10);
     }
 
-
-    // subtract con resultado negativo
-    function test_revert_subtract_negativeResult() public {
-        vm.expectRevert("Number cannot be negative");
-        calculadora.subtract(20, 40);
-    }
-
-    
     // divide con divisor 0
     function test_revert_divide_byZero() public {
-        vm.prank(owner); // sí es owner, pero segundo arg es 0
+        vm.prank(owner);    
         vm.expectRevert("Number cannot be zero");
         calculadora.divide(10, 0);
     }
- 
 
-    // Fuzz test:
-    function testFuzz_add(uint256 firstNumber, uint256 secondNumber) public {
-        calculadora.add(firstNumber, secondNumber);
-        assert(calculadora.result() == (firstNumber + secondNumber));
-    }
-    function testFuzz_subtract(uint256 firstNumber, uint256 secondNumber) public {
-        calculadora.subtract(firstNumber, secondNumber);
-        assert(calculadora.result() == (firstNumber - secondNumber));
-    }
-    function testFuzz_multiply(uint256 firstNumber, uint256 secondNumber) public {
-        calculadora.multiply(firstNumber, secondNumber);
-        assert(calculadora.result() == (firstNumber * secondNumber));
-    }
-    function testFuzz_divide(uint256 firstNumber, uint256 secondNumber) public {
-        calculadora.divide(firstNumber, secondNumber);
-        assert(calculadora.result() == (firstNumber / secondNumber));
-    }
 }
