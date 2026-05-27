@@ -29,34 +29,46 @@ contract CalculadoraTest is Test { //"IS" es la palabra reservada para herencia 
         assert(firstResult_ == firstResult);
     }
     function test_add() public { //"test_" es la palabra reservada para que el compilador reconozca que es un test.
-        calculadora.add(10, 20);
-        assert(calculadora.result() == 30);
+        uint256 firstNumber = 10;
+        uint256 secondNumber = 20;
+        calculadora.add(firstNumber, secondNumber);
+        assert(calculadora.result() == (firstNumber + secondNumber));
     }
     function test_subtract() public { 
-        calculadora.subtract(40, 20);
-        assert(calculadora.result() == 20);
+        uint256 firstNumber = 40;
+        uint256 secondNumber = 20;
+        calculadora.subtract(firstNumber, secondNumber);
+        assert(calculadora.result() == (firstNumber - secondNumber));
     }
     function test_multiply() public { 
-        calculadora.multiply(10, 20);
-        assert(calculadora.result() == 200);
+        uint256 firstNumber = 10;
+        uint256 secondNumber = 20;
+        calculadora.multiply(firstNumber, secondNumber);
+        assert(calculadora.result() == (firstNumber * secondNumber));
     }
-    function test_divide() public {  
+    function test_divide() public { 
+        uint256 firstNumber = 200;
+        uint256 secondNumber = 20; 
         vm.prank(owner);
-        calculadora.divide(200, 20);
-        assert(calculadora.result() == 10);
+        calculadora.divide(firstNumber, secondNumber);
+        assert(calculadora.result() == (firstNumber / secondNumber));
     }
 
         // divide sin ser owner
     function test_revert_divide_notOwner() public {
+        uint256 firstNumber = 100;
+        uint256 secondNumber = 10;
         vm.expectRevert("Not allowed");
-        calculadora.divide(100, 10);
+        calculadora.divide(firstNumber, secondNumber);
     }
 
     // divide con divisor 0
     function test_revert_divide_byZero() public {
-        vm.prank(owner);    
+        vm.prank(owner);  
+        uint256 firstNumber = 100;
+        uint256 secondNumber = 0;
         vm.expectRevert("Number cannot be zero");
-        calculadora.divide(10, 0);
+        calculadora.divide(firstNumber, secondNumber);
     }
 
 }
