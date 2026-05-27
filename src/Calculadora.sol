@@ -25,7 +25,7 @@ constructor(uint256 firstResult_, address owner_){
         _;
     }
     modifier notNegative(uint256 number_){
-        require(number_ > 0, "Number cannot be negative");
+        require(number_ >= 0, "Number cannot be negative");
         _;
     }
 //-----------------------Events-----------------------
